@@ -2,6 +2,8 @@ from flask import Flask, render_template
 from faker import Faker
 import csv
 import requests
+from database import DEFAULT_PATH, init_database
+import sqlite3
 
 app = Flask(__name__)
 
@@ -49,6 +51,18 @@ def get_astronaut():
     r = requests.get('http://api.open-notify.org/astros.json')
     astronauts = r.json()['number']
     return render_template('generate.html', astronauts=astronauts)
+
+
+@app.route('/peace')
+def amount_of_distinct_names():
+    init_database()
+    with sqlite3.connect(DEFAULT_PATH) as conn:
+        with conn as cursor:
+            c = cursor.execute("SELECT COUNT(DISTINCT name) FROM customers")
+            rows = c.fetchall()
+            for row in rows:
+                return render_template('index.html', row=row)
+
 
 
 if __name__ == '__main__':
