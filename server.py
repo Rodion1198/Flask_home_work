@@ -53,16 +53,25 @@ def get_astronaut():
     return render_template('generate.html', astronauts=astronauts)
 
 
-@app.route('/peace')
+@app.route('/names')
 def amount_of_distinct_names():
     init_database()
     with sqlite3.connect(DEFAULT_PATH) as conn:
         with conn as cursor:
             c = cursor.execute("SELECT COUNT(DISTINCT name) FROM customers")
-            rows = c.fetchall()
+            rows = c.fetchone()
             for row in rows:
                 return render_template('index.html', row=row)
 
+
+@app.route('/tracks')
+def amount_of_tracks():
+    with sqlite3.connect(DEFAULT_PATH) as conn:
+        with conn as cursor:
+            c = cursor.execute("SELECT COUNT(track) FROM tracks")
+            rows = c.fetchone()
+            for row2 in rows:
+                return render_template('index.html', row2=row2)
 
 
 if __name__ == '__main__':
