@@ -28,6 +28,14 @@ def init_database():
                     """INSERT INTO customers(name) VALUES (?)""",
                     [user]
                 )
+            cursor.execute("""CREATE TABLE IF NOT EXISTS tracks
+                (id_track INTEGER PRIMARY KEY AUTOINCREMENT,
+                genre TEXT NOT NULL,
+                track TEXT NOT NULL,
+                duration REAL NOT NULL)"""
+                           )
+
+
 
 
 # def exec_query(query, *args):
