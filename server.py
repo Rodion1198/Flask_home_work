@@ -64,7 +64,7 @@ def amount_of_distinct_names():
                 return render_template('index.html', row=row)
 
 
-@app.route('/tracks')
+@app.route('/tracks/')
 def amount_of_tracks():
     with sqlite3.connect(DEFAULT_PATH) as conn:
         with conn as cursor:
@@ -74,5 +74,14 @@ def amount_of_tracks():
                 return render_template('index.html', row2=row2)
 
 
+@app.route('/track-sec')
+def track_sec():
+    with sqlite3.connect(DEFAULT_PATH) as conn:
+        with conn as cursor:
+            c = cursor.execute('SELECT track,duration FROM tracks')
+            rows = c.fetchall()
+            return render_template('generate.html', row=rows)
+
+
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
