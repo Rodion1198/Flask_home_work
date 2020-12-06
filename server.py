@@ -79,8 +79,28 @@ def track_sec():
     with sqlite3.connect(DEFAULT_PATH) as conn:
         with conn as cursor:
             c = cursor.execute('SELECT track,duration FROM tracks')
-            rows = c.fetchall()
-            return render_template('generate.html', row=rows)
+            row = c.fetchall()
+            return render_template('generate.html', row=row)
+
+
+@app.route('/track-sec/stat')
+def sum_track():
+    with sqlite3.connect(DEFAULT_PATH) as conn:
+        with conn as cursor:
+            c = cursor.execute('SELECT AVG(duration) FROM tracks')
+            rows = c.fetchone()
+            for s in rows:
+                a = str(s)
+                convert = sum(int(i) * 60 ** index for index, i in enumerate(a.split(".")[::-1]))
+
+            c2 = cursor.execute('SELECT SUM(duration) FROM tracks')
+            rows2 = c2.fetchone()
+            for s_1 in rows2:
+                a_1 = str(s_1)
+                convert2 = sum(int(i) * 60 ** index for index, i in enumerate(a_1.split(".")[::-1]))
+                return render_template('generate.html', convert=convert, convert2=convert2)
+
+
 
 
 if __name__ == '__main__':
