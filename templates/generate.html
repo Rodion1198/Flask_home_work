@@ -2,7 +2,6 @@
 {{ astronauts }}
 </pre>
 
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,6 +10,22 @@
 <body>
 <ul>
     {%for i in output%}
+    <li>{{i}}</li>
+    {%endfor%}
+</ul>
+<h1>{{ title }}</h1>
+</body>
+</html>
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title> {{ title }}</title>
+</head>
+<body>
+<ul>
+    {%for i in row%}
     <li>{{i}}</li>
     {%endfor%}
 </ul>
