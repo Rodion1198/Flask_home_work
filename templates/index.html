@@ -3,7 +3,7 @@
 </pre>
 
 <pre>
-{{ row }}
+{{ row1 }}
 </pre>
 
 <pre>
@@ -20,6 +20,41 @@
     {%for i in result%}
     <li>{{i}}</li>
     {%endfor%}
+</ul>
+<h1>{{ title }}</h1>
+</body>
+</html>
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title> {{ title }}</title>
+</head>
+<body>
+<ul>
+    {%for i in convert%}
+    <li>{{i}}</li>
+    {%endfor%}
+</ul>
+<h1>{{ title }}</h1>
+</body>
+</html>
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title> {{ title }}</title>
+</head>
+<body>
+<ul>
+    {%for i in row%}
+    <li>{{ i }}</li>
+    {% endfor %}
 </ul>
 <h1>{{ title }}</h1>
 </body>
