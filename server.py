@@ -2,7 +2,7 @@ from flask import Flask, render_template
 from faker import Faker
 import csv
 import requests
-from database import DEFAULT_PATH, init_database
+from database import DEFAULT_PATH, init_database, exec_query
 import sqlite3
 
 app = Flask(__name__)
@@ -78,9 +78,15 @@ def amount_of_tracks():
 def track_sec():
     with sqlite3.connect(DEFAULT_PATH) as conn:
         with conn as cursor:
-            c = cursor.execute('SELECT track,duration FROM tracks')
-            row = c.fetchall()
-            return render_template('generate.html', row=row)
+            c = cursor.execute('SELECT track FROM tracks')
+            row1 = c.fetchall()
+
+            c1 = cursor.execute('SELECT duration FROM tracks')
+            rows = c1.fetchall()
+            for s in rows:
+                a = s[0]
+                convert = str(sum(int(i) * 60 ** index for index, i in enumerate(a.split(":")[::-1])))
+            return render_template('index.html', convert=convert, row=row1)
 
 
 @app.route('/track-sec/stat')
@@ -101,6 +107,10 @@ def sum_track():
                 return render_template('generate.html', convert=convert, convert2=convert2)
 
 
+@app.route('/tracks/<genre>')
+def tracks_genre(genre):
+    choose_genre = exec_query(f"SELECT COUNT(id_track),genre FROM tracks GROUP BY genre HAVING COUNT({genre})")
+    return render_template('generate.html', tracks=choose_genre)
 
 
 if __name__ == '__main__':
