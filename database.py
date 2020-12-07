@@ -5,7 +5,6 @@ from faker import Faker
 
 fake = Faker()
 
-
 DEFAULT_PATH = os.path.join(os.path.dirname(__file__), 'db.sqlite3')
 
 
@@ -23,11 +22,11 @@ def init_database():
                 (id INTEGER PRIMARY KEY AUTOINCREMENT,
                 name TEXT NOT NULL)"""
             )
-            for user in generate_user(15):
-                cursor.execute(
-                    """INSERT INTO customers(name) VALUES (?)""",
-                    [user]
-                )
+            # for user in generate_user(15):
+            #     cursor.execute(
+            #         """INSERT INTO customers(name) VALUES (?)""",
+            #         [user]
+            #     )
             cursor.execute("""CREATE TABLE IF NOT EXISTS tracks
                 (id_track INTEGER PRIMARY KEY AUTOINCREMENT,
                 genre TEXT NOT NULL,
@@ -36,15 +35,12 @@ def init_database():
                            )
 
 
-
-
-# def exec_query(query, *args):
-#     with sqlite3.connect(DEFAULT_PATH) as conn:
-#         with conn as cursor:
-#             qs = cursor.execute(query, args)
-#             results = qs.fetchall()
-#     return results
-
+def exec_query(query, *args):
+    with sqlite3.connect(DEFAULT_PATH) as conn:
+        with conn as cursor:
+            qs = cursor.execute(query, args)
+            results = qs.fetchall()
+    return results
 
 
 if __name__ == "__main__":
